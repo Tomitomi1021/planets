@@ -1,8 +1,8 @@
 #define PARTICLE_COUNT	(256)
 
 typedef struct {
-	int x;
-	int y;
-	int vx;
-	int vy;
+	double x;
+	double y;
+	double vx;
+	double vy;
 } particle;

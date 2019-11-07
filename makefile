@@ -1,20 +1,20 @@
 #ファイル定義
 #TODO:ファイルを定義する。
-TARGET= a.out
-OBJS= 
+TARGET=planets.exe
+OBJS=main.o sdlwrapper.o openclWrapper.o particleCalculator.o
 
 #ビルドの過程で生成されるファイル
 PRODUCTS=*.o *.out
 
 #コンパイラ設定
-LIBS= -L/mingw64/lib -lOpenCL
-GCC_COMPILEOPTION= -I/mingw64/include
+LIBS=-L/mingw64/lib -lOpenCL -lSDL2 -lSDL2main -lSDL2_image -lSDL2_ttf
+GCC_COMPILEOPTION=-g -I/mingw64/include
 GXX_COMPILEOPTION=
 LINKOPTION=
 
 
-.PHONY:build clean rebuild
-build: $(TARGET)
+.PHONY:all clean rebuild
+all: $(TARGET)
 
 #ターゲットの作成
 $(TARGET):$(OBJS)

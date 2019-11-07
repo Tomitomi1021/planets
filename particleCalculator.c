@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
 #include <CL/cl.h>
@@ -34,9 +35,14 @@ int pc_init(){
 	ERRORCHECK(program);
 	
 	ret=clw_buildProgram(program);
-	ERRORCHECK(ret);
+	if(ret == CLW_FAIL){
+		fprintf(stderr,"BUILD ERROR!!\n");
+		fprintf(stderr,"<Build log>\n");
+		fprintf(stderr,"%s\n",clw_getLatestBuildErrorLog());
+		return PC_FAIL;
+	}
 
-	kernel = clw_createKernel(prg,PC_ENTRY);
+	kernel = clw_createKernel(program,PC_ENTRY);
 	ERRORCHECK(kernel);
 
 	return PC_SUCCESS;
@@ -44,13 +50,14 @@ int pc_init(){
 
 int pc_initialize(particle initialState[]){
 	int ret;
-	ret=clw_memory_write(stateA_m,initialState);
+	ret=clw_memory_write(stateA_m,initialState,0,sizeof(particle)*PARTICLE_COUNT);
 	ERRORCHECK(ret);
-	ret=clw_memory_write(stateB_m,initialState);
+	ret=clw_memory_write(stateB_m,initialState,0,sizeof(particle)*PARTICLE_COUNT);
 	ERRORCHECK(ret);
 }
 
 int pc_calculate(particle result[]){
+	int ret;
 	ret=clw_setKernelArg(kernel,0,stateA_m);
 	ERRORCHECK(ret);
 
