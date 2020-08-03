@@ -7,3 +7,4 @@ int pc_init();
 int pc_initialize(particle initialState[]);
 int pc_calculate(particle result[]);
 void pc_quit();
+int pc_setoption(option* opt);

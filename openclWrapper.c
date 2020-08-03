@@ -349,7 +349,7 @@ int clw_buildProgram(clw_program prg){
 	}
 
 	ret = clBuildProgram(programs[prg],1,&device,NULL,NULL,NULL);
-	if(ret != CL_SUCCESS){
+	{
 		size_t size;
 		clGetProgramBuildInfo(
 			programs[prg],
@@ -360,6 +360,8 @@ int clw_buildProgram(clw_program prg){
 			&size
 			);
 		BuildErrorLog[size]=0;
+	}
+	if(ret != CL_SUCCESS){
 		setError("opencl:code %d",ret);
 		return CLW_FAIL;
 	}

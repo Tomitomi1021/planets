@@ -37,6 +37,7 @@ clean:
 	rm -rf $(PRODUCTS) $(TARGET)
 
 run:all
+	make rebuild
 	./$(TARGET)
 
 debug:all

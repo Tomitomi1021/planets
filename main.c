@@ -1,13 +1,9 @@
 #include"particleCalculator.h"
+#include"config.h"
 #include"sdlwrapper.h"
 #include<stdlib.h>
 #include<time.h>
 #include<stdio.h>
-
-#define WINDOW_WIDTH		(1920)
-#define WINDOW_HEIGHT		(1080)
-#define INTERNAL_WIDTH		(990)
-#define INTERNAL_HEIGHT		(520)
 
 struct {
 	particle calc[PARTICLE_COUNT];
@@ -25,10 +21,15 @@ void particleInit(){
 		Particles.color[i].b=rand()%256;
 		Particles.calc[i].x=rand()%INTERNAL_WIDTH;
 		Particles.calc[i].y=rand()%INTERNAL_HEIGHT;
-		Particles.calc[i].vx=rand()%200-100;
-		Particles.calc[i].vy=rand()%200-100;
+		Particles.calc[i].vx=rand()%100-50;
+		Particles.calc[i].vy=rand()%100-50;
 	}
 	pc_initialize(Particles.calc);
+	{
+		option opt;
+		opt.mode=0;
+		pc_setoption(&opt);
+	}
 }
 
 void frame(){
@@ -54,14 +55,25 @@ void frame(){
 	}
 	setBlendMode(window,SDL_BLENDMODE_NONE);
 	drawImage(window,d,0);
+
+	if(KeyState[SDL_SCANCODE_Z]){
+		option opt;
+		opt.mode=1;
+		pc_setoption(&opt);
+	}else{
+		option opt;
+		opt.mode=0;
+		pc_setoption(&opt);
+	}
 }
+
 
 int WinMain(){
 	int ret;
 	ret=pc_init();
 	if(ret==PC_FAIL)return -1;
 	particleInit();
-	init(INIT_SIZE,WINDOW_WIDTH,WINDOW_HEIGHT);
+	init(INIT_SIZE|INIT_FLAG,WINDOW_WIDTH,WINDOW_HEIGHT,SDL_WINDOW_FULLSCREEN_DESKTOP);
 	mainLoop(frame);
 	quit();
 	pc_quit();
