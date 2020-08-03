@@ -8,7 +8,7 @@ PRODUCTS=*.o *.out
 
 #コンパイラ設定
 LIBS=-L/mingw64/lib -lOpenCL -lSDL2 -lSDL2main -lSDL2_image -lSDL2_ttf
-GCC_COMPILEOPTION=-g -I/mingw64/include
+GCC_COMPILEOPTION=-O3 -g -I/mingw64/include
 GXX_COMPILEOPTION=
 LINKOPTION=
 
@@ -37,6 +37,7 @@ clean:
 	rm -rf $(PRODUCTS) $(TARGET)
 
 run:all
+	make rebuild
 	./$(TARGET)
 
 debug:all

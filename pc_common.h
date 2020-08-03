@@ -1,4 +1,3 @@
-#define PARTICLE_COUNT	(256)
 
 typedef struct {
 	double x;
@@ -6,3 +5,7 @@ typedef struct {
 	double vx;
 	double vy;
 } particle;
+
+typedef struct{
+	int mode;
+} option;
