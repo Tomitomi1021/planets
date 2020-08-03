@@ -5,7 +5,3 @@ typedef struct {
 	double vx;
 	double vy;
 } particle;
-
-typedef struct{
-	int mode;
-} option;

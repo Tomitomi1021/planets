@@ -25,11 +25,6 @@ void particleInit(){
 		Particles.calc[i].vy=rand()%100-50;
 	}
 	pc_initialize(Particles.calc);
-	{
-		option opt;
-		opt.mode=0;
-		pc_setoption(&opt);
-	}
 }
 
 void frame(){
@@ -55,18 +50,7 @@ void frame(){
 	}
 	setBlendMode(window,SDL_BLENDMODE_NONE);
 	drawImage(window,d,0);
-
-	if(KeyState[SDL_SCANCODE_Z]){
-		option opt;
-		opt.mode=1;
-		pc_setoption(&opt);
-	}else{
-		option opt;
-		opt.mode=0;
-		pc_setoption(&opt);
-	}
 }
-
 
 int WinMain(){
 	int ret;

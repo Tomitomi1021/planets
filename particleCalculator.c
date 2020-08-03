@@ -6,7 +6,7 @@
 #include "particleCalculator.h"
 #include "config.h"
 
-clw_memory stateA_m,stateB_m,option_m;
+clw_memory stateA_m,stateB_m;
 clw_program program;
 clw_kernel kernel;
 
@@ -61,22 +61,12 @@ int pc_initialize(particle initialState[]){
 	return PC_SUCCESS;
 }
 
-int pc_setoption(option* opt){
-	int ret;
-	ret = clw_memory_write(option_m,opt,0,sizeof(option));
-	ERRORCHECK(ret);
-	return PC_SUCCESS;
-}
-
 int pc_calculate(particle result[]){
 	int ret;
 	ret=clw_setKernelArg(kernel,0,stateA_m);
 	ERRORCHECK(ret);
 
 	ret=clw_setKernelArg(kernel,1,stateB_m);
-	ERRORCHECK(ret);
-
-	ret=clw_setKernelArg(kernel,2,option_m);
 	ERRORCHECK(ret);
 
 	ret=clw_kernel_run(kernel,PARTICLE_COUNT,GROUP_COUNT);
